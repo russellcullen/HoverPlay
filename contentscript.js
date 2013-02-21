@@ -5,14 +5,19 @@ var hoverPlay = function() {
     var srcElement = e.srcElement;
     if (srcElement.nodeName == "A") {
       var url = srcElement.href
-      if (isAudioFile(url) && !document.getElementById('hover-audio')) {
+      if (isAudioFile(url) && !document.getElementById('hover-audio') && !srcElement.classList.contains("broken-audio-link")) {
+        srcElement.classList.add("audio-tmp-class")
         var audio = document.createElement("audio");
         audio.setAttribute("autoplay", "autoplay");
         audio.setAttribute("style", "display: none;");
         audio.setAttribute("src", url);
         audio.setAttribute("id", 'hover-audio')
-        audio.setAttribute("onerror", "document.getElementById('hover-audio').remove();")
-        audio.setAttribute("onended", "document.getElementById('hover-audio').remove();")
+        audio.setAttribute("onerror", "var l = document.getElementsByClassName('audio-tmp-class')[0].classList;\
+                                      l.remove('audio-tmp-class'); l.add('broken-audio-link'); \
+                                      document.getElementById('hover-audio').remove();")
+        audio.setAttribute("onended", "var l = document.getElementsByClassName('audio-tmp-class')[0].classList;\
+                                      l.remove('audio-tmp-class'); \
+                                      document.getElementById('hover-audio').remove();")
         document.body.appendChild(audio);
       }
     }
@@ -43,6 +48,5 @@ var isAudioFile = function (url) {
   return false;
 }
 
-hoverPlay();
-// replaceLink();
-
+// hoverPlay();
+replaceLink();
