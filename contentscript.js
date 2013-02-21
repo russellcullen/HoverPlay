@@ -1,5 +1,3 @@
-
-// Mouse listener for any move event on the current document.
 var hoverPlay = function() {
   document.addEventListener('mousemove', function (e) {
     var srcElement = e.srcElement;
@@ -48,13 +46,7 @@ var isAudioFile = function (url) {
   return false;
 }
 
-// hoverPlay();
-
-// replaceLink();
-
-
 chrome.extension.sendMessage({info: "mode"}, function(response) {
-  console.log(response);
   if (response.isHoverMode == "true") {
     hoverPlay();
   } else {
