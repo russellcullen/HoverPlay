@@ -1,18 +1,19 @@
-HoverPlay
+Audiomatic
 =========
 
-HoverZoom for audio files
+Easier interaction with audio links on the web.
 
 ##2 Modes
 
+* [Replace Mode](#replace) (default)
 * [Hover Mode](#hover)
-* [Replace Mode](#replace)
 
+
+###Replace Mode
+<a href="#replace"></a>
+Replaces all links to audio files with the HTML5 audio player.
 
 ###Hover Mode
 <a href='#hover'></a>
 Just hover over a link to an audio file and it will start playing immediately!
 
-###Replace Mode
-<a href="#replace"></a>
-Replaces all links to audio with the HTML5 audio player.
