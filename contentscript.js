@@ -49,4 +49,15 @@ var isAudioFile = function (url) {
 }
 
 // hoverPlay();
-replaceLink();
+
+// replaceLink();
+
+
+chrome.extension.sendMessage({info: "mode"}, function(response) {
+  console.log(response);
+  if (response.isHoverMode == "true") {
+    hoverPlay();
+  } else {
+    replaceLink();
+  }
+});
