@@ -1,7 +1,7 @@
 Audiomatic
 =========
 
-Easier interaction with audio links on the web.
+Chrome extension for easier interaction with audio links on the web.
 
 ##2 Modes
 
