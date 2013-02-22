@@ -16,7 +16,7 @@ var isAudioFile = function (url) {
 
 var isNewAudio = function(url) {
   var current = $('#hover-audio');
-  if (current.length == 0) {
+  if (current.length == 0 || (current[0].currentTime == current[0].duration)) {
     return true;
   }
   // console.log(current.attr('href'))
@@ -91,7 +91,6 @@ $(function() {
   );
 
   chrome.extension.sendMessage({show: needHoverPlay}, function(response) {
-    console.log(response)
     if (response.disabled == "true") {
       return;
     }
