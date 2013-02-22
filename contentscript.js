@@ -47,11 +47,14 @@ var keyListener = function (e) {
         break;
       }
       var player = players[0]
-      e.preventDefault();
-      if (player.paused) {
-        player.play();
-      } else {
-        player.pause();
+      var target = $(e.target)
+      if (!(target.is("textarea") || target.is("input"))) {
+        if (player.paused) {
+          player.play();
+        } else {
+          player.pause();
+        }
+        e.preventDefault();
       }
       break;
     case 27:
