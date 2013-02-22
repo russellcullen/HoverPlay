@@ -18,7 +18,7 @@ var hoverListener = function () {
   var srcElement = $(this);
   var url = srcElement.attr('href');
   if (isAudioFile(url) && ($('#hover-audio').length == 0) && !srcElement.hasClass("broken-audio-link")) {
-    var audio = $("<audio id='hover-audio' controls autoplay src='"+url+"' style='display: none;'></audio>")
+    var audio = $("<audio id='hover-audio' controls src='"+url+"' style='display: none;'></audio>")
     audio.on("error", function() {
       srcElement.addClass('broken-audio-link');
       $(this).remove();
@@ -27,16 +27,40 @@ var hoverListener = function () {
       $(this).remove();
     });
     $(document.body).append(audio);
+    audio[0].play();
+  }
+}
+
+var keyListener = function (e) {
+  switch (e.which) {
+    case 32:
+      var players = $('#hover-audio')
+      if (!players || !players[0]) {
+        break;
+      }
+      var player = players[0]
+      e.preventDefault();
+      if (player.paused) {
+        player.play();
+      } else {
+        player.pause();
+      }
+      break;
+    case 27:
+      $('#hover-audio').remove();
+      break;
   }
 }
 
 var hoverPlay = function() {
   $('a').live('mouseenter', hoverListener)
+  $(document).on('keydown', keyListener)
 }
 
 
 var disableHoverPlay = function() {
   $('a').die('mouseenter', hoverListener);
+  $(document).off('keydown', keyListener);
 }
 
 var audioPlayer = function() {
