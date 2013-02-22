@@ -13,9 +13,10 @@ function save_options() {
   }, 750);
   chrome.tabs.getSelected(null, function(tab) {
     var disabled = document.getElementById("disabled").checked;
-    localStorage["audiomatic-"+tab.url] = disabled;
+    var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
+    localStorage["audiomatic-"+domain] = disabled;
     chrome.tabs.sendMessage(tab.id, {
-      disabled: localStorage["audiomatic-"+tab.url], 
+      disabled: localStorage["audiomatic-"+domain], 
       isHoverMode: localStorage["isHoverMode"]
     });
   });
@@ -32,7 +33,8 @@ function restore_options() {
     document.getElementById("replace").checked = true;
   }
   chrome.tabs.getSelected(null, function(tab) {
-    var disabled = localStorage["audiomatic-"+tab.url]
+    var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
+    var disabled = localStorage["audiomatic-"+domain]
     if (disabled == "true") {
       document.getElementById("disabled").checked = true;
     } else {
