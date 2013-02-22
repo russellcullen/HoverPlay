@@ -1,3 +1,6 @@
 #status {
 	color: #0F0;
+    position:fixed;
+    top: 50%;
+    left: 50%;
 }

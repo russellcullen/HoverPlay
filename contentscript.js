@@ -1,3 +1,4 @@
+var HOVER_DELAY = 200;
 
 var isAudioFile = function (url) {
   if (!url) {
@@ -44,7 +45,7 @@ var hoverListener = function () {
       audio[0].play();
       chrome.extension.sendMessage({show: true});
     }
-  }, 200);
+  }, HOVER_DELAY);
 }
 
 var keyListener = function (e) {
@@ -107,6 +108,7 @@ $(function() {
     if (response.disabled == "true") {
       return;
     }
+    HOVER_DELAY = response.hoverDelay || 200;
     hoverPlay();
   });
 });

@@ -3,11 +3,12 @@ chrome.extension.onMessage.addListener(
     chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT, active: true}, function(tabs) {
       var tab = tabs[0]
       var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
-      if (request.show || localStorage.getItem("hoverzoom-"+domain)) {
+      if (request.show || localStorage.getItem("disabled-"+domain)) {
         chrome.pageAction.show(tab.id)
       }
       sendResponse({
-        disabled: localStorage.getItem("hoverzoom-"+domain)
+        disabled: localStorage.getItem("disabled-"+domain),
+        hoverDelay: localStorage.getItem("hover-delay")
       });
     });
     return true;

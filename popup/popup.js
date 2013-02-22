@@ -6,9 +6,9 @@ function save_options() {
     var tab = tabs[0];
     var disabled = document.getElementById("disabled").checked;
     var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
-    localStorage.setItem("hoverzoom-"+domain, disabled);
+    localStorage.setItem("disabled-"+domain, disabled);
     chrome.tabs.sendMessage(tab.id, {
-      disabled: localStorage.getItem("hoverzoom-"+domain),
+      disabled: localStorage.getItem("disabled-"+domain),
     });
     window.close();
   });
@@ -19,7 +19,7 @@ function restore_options() {
   chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT, active: true}, function(tabs) {
     var tab = tabs[0];
     var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
-    var disabled = localStorage.getItem("hoverzoom-"+domain);
+    var disabled = localStorage.getItem("disabled-"+domain);
     var box = document.getElementById("disabled");
     if (disabled == "true") {
       box.checked = true;
