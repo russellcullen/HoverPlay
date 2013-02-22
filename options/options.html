@@ -1,33 +1,42 @@
 <html>
 	<head>
-		<title>HoverPlay Options</title>
+		<title>HoverPlay</title>
 		<link rel="stylesheet" type="text/css" href="/options/options.css"> 
 	</head>
 
 	<body>
 		<div class='container'>
-		<div class='page-header'>
-			<img width="50" src="/icons/hoverplay128.png"></img><h1>HoverPlay Settings</h1>
-		</div>
-		<div class='content'>
-			Hover Delay:
-			<select id='delay'>
-			  <option value="100">.1 seconds</option>
-			  <option value="200" selected>.2 seconds</option>
-			  <option value="500">.5 seconds</option>
-			  <option value="750">.75 seconds</option>
-			  <option value="1000">1 second</option>
-			  <option value="1500">1.5 seconds</option>
-			  <option value="2000">2 seconds</option>
-			</select>
-			<br>
-			<br>
-			<div id="sites">
-				<strong>Disabled Sites:</strong><br>
+			<div class='page-header'>
+				<img width="50" src="/icons/hoverplay128.png"></img><h1>HoverPlay</h1>
 			</div>
-			<button id='save'>Save</button>
-			<div id='status' style='display:none;'>Options Saved</div>
-		</div></div>
+			<div class='content'>
+				Hover Delay:
+				<select id='delay'>
+				  <option value="100">.1 seconds</option>
+				  <option value="200" selected>.2 seconds</option>
+				  <option value="500">.5 seconds</option>
+				  <option value="750">.75 seconds</option>
+				  <option value="1000">1 second</option>
+				  <option value="1500">1.5 seconds</option>
+				  <option value="2000">2 seconds</option>
+				</select>
+				<br>
+				<br>
+				<div id="sites">
+					<p><strong>Disabled Sites:</strong></p>
+				</div>
+				<div id='status' style='display:none;'>Options Saved</div>
+			</div>
+			<div class='page-header'>
+				<h3>Using HoverPlay</h3>
+			</div>
+			<div class='content'>
+				<p>Some text here</p>
+			</div>
+			<div class='footer'>
+				Made by Russell Cullen
+			</div>
+		</div>
 	</body>
 	<script type="text/javascript" src="/jquery.js"></script>
 	<script src="options.js"></script>

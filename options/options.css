@@ -32,9 +32,21 @@ h1 {
 	font-size: 38.5px;
 }
 
+h2 {
+  font-size: 31.5px;
+}
+
+h3 {
+  font-size: 24.5px;
+}
+
 img {
 	padding-right: 10px;
 	vertical-align: middle;
+}
+
+p {
+  margin: 0 0 10px;
 }
 
 .page-header {
@@ -46,13 +58,14 @@ img {
 .content {
 	background-color: #eee;
 	padding: 20px;
+	margin-bottom: 20px;
 	-moz-box-shadow: 2px 2px 5px rgba(0,0,0,0.6);
 	-webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.6);
 	box-shadow: 2px 2px 5px rgba(0,0,0,0.6);
 }
 
 .container {
-	width: 940px;
+	width: 500px;
 	margin-right: auto;
 	margin-left: auto;
 	*zoom: 1;
@@ -67,6 +80,16 @@ img {
 
 .container:after {
 	clear: both;
+}
+
+.right {
+	float: right;
+}
+
+.disabled-site {
+	background-color: #fff;
+	padding: 5px;
+	border-bottom: dotted #eee 1px;
 }
 
 #status {
