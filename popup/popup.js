@@ -3,38 +3,35 @@
 // Saves options to localStorage.
 function save_options() {
   var isHoverMode = document.getElementById("hover").checked;
-  localStorage["isHoverMode"] = isHoverMode;
+  localStorage.setItem("isHoverMode", isHoverMode);
 
-  // Update status to let user know options were saved.
-  var status = document.getElementById("status");
-  status.innerHTML = "Mode Saved.";
-  setTimeout(function() {
-    status.innerHTML = "";
-  }, 750);
-  chrome.tabs.getSelected(null, function(tab) {
+  chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT, active: true}, function(tabs) {
+    var tab = tabs[0];
     var disabled = document.getElementById("disabled").checked;
     var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
-    localStorage["audiomatic-"+domain] = disabled;
+    localStorage.setItem("audiomatic-"+domain, disabled);
     chrome.tabs.sendMessage(tab.id, {
-      disabled: localStorage["audiomatic-"+domain], 
-      isHoverMode: localStorage["isHoverMode"]
+      disabled: localStorage.getItem("audiomatic-"+domain), 
+      isHoverMode: localStorage.getItem("isHoverMode")
     });
+    window.close();
   });
 }
 
 // Restores select box state to saved value from localStorage.
 function restore_options() {
-  var isHoverMode = localStorage["isHoverMode"];
+  var isHoverMode = localStorage.getItem("isHoverMode");
   if (isHoverMode == "true") {
-    document.getElementById("replace").checked = false;
+    document.getElementById("player").checked = false;
     document.getElementById("hover").checked = true;
   } else {
     document.getElementById("hover").checked = false;
-    document.getElementById("replace").checked = true;
+    document.getElementById("player").checked = true;
   }
-  chrome.tabs.getSelected(null, function(tab) {
+  chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT, active: true}, function(tabs) {
+    var tab = tabs[0];
     var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
-    var disabled = localStorage["audiomatic-"+domain]
+    var disabled = localStorage.getItem("audiomatic-"+domain);
     if (disabled == "true") {
       document.getElementById("disabled").checked = true;
     } else {
