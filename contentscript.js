@@ -29,7 +29,7 @@ var hoverListener = function () {
   if (isAudioFile(url) && isNewAudio(url) && !srcElement.hasClass("broken-audio-link")) {
     $('#hover-audio').remove();
     var audio = $("<audio id='hover-audio' controls src='"+url+"'></audio>")
-    audio.on("error", function() {
+    audio.on("error stalled", function() {
       srcElement.addClass('broken-audio-link');
       $(this).remove();
     });
