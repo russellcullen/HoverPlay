@@ -23,20 +23,28 @@ var isNewAudio = function(url) {
   return current.attr('src') != url
 }
 
+var removeHover = function () {
+  var obj = $(this);
+  obj.removeClass('hover-active');
+}
+
 var hoverListener = function () {
   var srcElement = $(this);
+  srcElement.addClass('hover-active')
   var url = srcElement.attr('href');
-  if (isAudioFile(url) && isNewAudio(url) && !srcElement.hasClass("broken-audio-link")) {
-    $('#hover-audio').remove();
-    var audio = $("<audio id='hover-audio' controls src='"+url+"'></audio>")
-    audio.on("error stalled", function() {
-      srcElement.addClass('broken-audio-link');
-      $(this).remove();
-    });
-    $(document.body).append(audio);
-    audio[0].play();
-    chrome.extension.sendMessage({show: true});
-  }
+  setTimeout(function() {
+    if (srcElement.hasClass('hover-active') && isAudioFile(url) && isNewAudio(url) && !srcElement.hasClass("broken-audio-link")) {
+      $('#hover-audio').remove();
+      var audio = $("<audio id='hover-audio' controls src='"+url+"'></audio>")
+      audio.on("error stalled", function() {
+        srcElement.addClass('broken-audio-link');
+        $(this).remove();
+      });
+      $(document.body).append(audio);
+      audio[0].play();
+      chrome.extension.sendMessage({show: true});
+    }
+  }, 200);
 }
 
 var keyListener = function (e) {
@@ -64,13 +72,15 @@ var keyListener = function (e) {
 }
 
 var hoverPlay = function() {
-  $('a').live('mouseenter', hoverListener)
+  $('a').live('mouseenter', hoverListener);
+  $('a').live('mouseleave', removeHover);
   $(document).on('keydown', keyListener)
 }
 
 
 var disableHoverPlay = function() {
   $('a').die('mouseenter', hoverListener);
+  $('a').die('mouseleave', removeHover);
   $(document).off('keydown', keyListener);
   $('#hover-audio').remove();
 }
