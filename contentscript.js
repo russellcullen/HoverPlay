@@ -35,6 +35,7 @@ var hoverListener = function () {
     });
     $(document.body).append(audio);
     audio[0].play();
+    chrome.extension.sendMessage({show: true});
   }
 }
 
@@ -90,6 +91,7 @@ $(function() {
   );
 
   chrome.extension.sendMessage({show: needHoverPlay}, function(response) {
+    console.log(response)
     if (response.disabled == "true") {
       return;
     }

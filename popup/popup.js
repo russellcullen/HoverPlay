@@ -6,9 +6,9 @@ function save_options() {
     var tab = tabs[0];
     var disabled = document.getElementById("disabled").checked;
     var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
-    localStorage.setItem("audiomatic-"+domain, disabled);
+    localStorage.setItem("hoverzoom-"+domain, disabled);
     chrome.tabs.sendMessage(tab.id, {
-      disabled: localStorage.getItem("audiomatic-"+domain),
+      disabled: localStorage.getItem("hoverzoom-"+domain),
     });
     window.close();
   });
@@ -19,7 +19,7 @@ function restore_options() {
   chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT, active: true}, function(tabs) {
     var tab = tabs[0];
     var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
-    var disabled = localStorage.getItem("audiomatic-"+domain);
+    var disabled = localStorage.getItem("hoverzoom-"+domain);
     if (disabled == "true") {
       document.getElementById("disabled").checked = true;
     } else {
