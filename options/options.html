@@ -13,19 +13,24 @@
 			<div class='content'>
 				Hover Delay:
 				<select id='delay'>
-				  <option value="100">.1 seconds</option>
-				  <option value="200" selected>.2 seconds</option>
-				  <option value="500">.5 seconds</option>
-				  <option value="750">.75 seconds</option>
+				  <option value="100">0.1 seconds</option>
+				  <option value="200" selected>0.2 seconds</option>
+				  <option value="500">0.5 seconds</option>
+				  <option value="750">0.75 seconds</option>
 				  <option value="1000">1 second</option>
 				  <option value="1500">1.5 seconds</option>
 				  <option value="2000">2 seconds</option>
 				</select>
 				<br>
 				<br>
+				<p><strong>HoverPlay is disabled on these sites:</strong></p>
 				<div id="sites">
-					<p><strong>Disabled Sites:</strong></p>
+					
 				</div>
+				<br>
+				<label for="add-site"> Disable a site:
+				<input type="text" name="add-site" placeholder="example.com" id="add-site-input">
+				<button id="add-site-btn"> Disable
 			</div>
 			<div class='page-header'>
 				<h3>Using HoverPlay</h3>
@@ -34,7 +39,11 @@
 				<p>Some text here</p>
 			</div>
 			<div class='footer'>
-				Made by Russell Cullen
+				<p>
+					This extension is <a href="https://github.com/coolbrow/HoverPlay">Open Source</a>.
+
+					Created by <a href="http://russellscullen.com/">Russell Cullen</a> | <a href="http://github.com/coolbrow">GitHub</a>
+				</p>
 			</div>
 		</div>
 	</body>

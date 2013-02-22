@@ -33,11 +33,11 @@ h1 {
 }
 
 h2 {
-  font-size: 31.5px;
+  	font-size: 31.5px;
 }
 
 h3 {
-  font-size: 24.5px;
+  	font-size: 24.5px;
 }
 
 img {
@@ -46,13 +46,27 @@ img {
 }
 
 p {
-  margin: 0 0 10px;
+  	margin: 0 0 10px;
+}
+
+a {
+ 	font-weight:bold;
+ 	text-decoration: none;
+ 	color: #000;
+}
+
+a:hover {
+  	color: #bbb;
 }
 
 .page-header {
 	color: #fff;
 	padding-bottom: 9px;
 	margin: 20px 0 15px;
+}
+
+.footer {
+	text-align: center;
 }
 
 .content {
