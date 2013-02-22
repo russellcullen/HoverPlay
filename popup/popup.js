@@ -20,10 +20,11 @@ function restore_options() {
     var tab = tabs[0];
     var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
     var disabled = localStorage.getItem("hoverzoom-"+domain);
+    var box = document.getElementById("disabled");
     if (disabled == "true") {
-      document.getElementById("disabled").checked = true;
+      box.checked = true;
     } else {
-      document.getElementById("disabled").checked = false;
+      box.checked = false;
     }
   });
 }
