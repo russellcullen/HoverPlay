@@ -11,7 +11,7 @@ Chrome extension for easier interaction with audio links on the web.
 
 ###Replace Mode
 <a href="#replace"></a>
-Replaces all links to audio files with the HTML5 audio player.
+Adds an HTML5 audio player under links to audio files. 
 
 ###Hover Mode
 <a href='#hover'></a>

@@ -27,10 +27,16 @@ var replaceLink = function() {
   for(i = 0; i <list.length; i++) {
     var url = list[i].href;
     if (isAudioFile(url)) {
-      var audio = document.createElement("audio");
-      audio.setAttribute("controls", "controls");
-      audio.setAttribute("src", url);
-      list[i].parentNode.replaceChild(audio, list[i])
+      var audio = document.createElement("div");
+      var player = document.createElement("audio")
+      player.setAttribute("controls", "controls");
+      player.setAttribute("src", url);
+      audio.appendChild(player);
+      if (list[i].nextSibling) {
+        list[i].parentNode.insertBefore(audio, list[i].nextSibling);
+      } else {
+        list[i].parentNode.appendChild(audio);
+      }
     }
   }
 }
