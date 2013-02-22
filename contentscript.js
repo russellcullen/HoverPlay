@@ -1,45 +1,3 @@
-var hoverPlay = function() {
-  document.addEventListener('mousemove', function (e) {
-    var srcElement = e.srcElement;
-    if (srcElement.nodeName == "A") {
-      var url = srcElement.href
-      if (isAudioFile(url) && !document.getElementById('hover-audio') && !srcElement.classList.contains("broken-audio-link")) {
-        srcElement.classList.add("audio-tmp-class")
-        var audio = document.createElement("audio");
-        audio.setAttribute("autoplay", "autoplay");
-        audio.setAttribute("style", "display: none;");
-        audio.setAttribute("src", url);
-        audio.setAttribute("id", 'hover-audio')
-        audio.setAttribute("onerror", "var l = document.getElementsByClassName('audio-tmp-class')[0].classList;\
-                                      l.remove('audio-tmp-class'); l.add('broken-audio-link'); \
-                                      document.getElementById('hover-audio').remove();")
-        audio.setAttribute("onended", "var l = document.getElementsByClassName('audio-tmp-class')[0].classList;\
-                                      l.remove('audio-tmp-class'); \
-                                      document.getElementById('hover-audio').remove();")
-        document.body.appendChild(audio);
-      }
-    }
-  }, false);
-}
-
-var replaceLink = function() {
-  var list = document.getElementsByTagName("a")
-  for(i = 0; i <list.length; i++) {
-    var url = list[i].href;
-    if (isAudioFile(url)) {
-      var audio = document.createElement("div");
-      var player = document.createElement("audio")
-      player.setAttribute("controls", "controls");
-      player.setAttribute("src", url);
-      audio.appendChild(player);
-      if (list[i].nextSibling) {
-        list[i].parentNode.insertBefore(audio, list[i].nextSibling);
-      } else {
-        list[i].parentNode.appendChild(audio);
-      }
-    }
-  }
-}
 
 var isAudioFile = function (url) {
   // Only true if ends with specific audio extension or from awd.io
@@ -52,7 +10,68 @@ var isAudioFile = function (url) {
   return false;
 }
 
+var hoverListener = function () {
+  var srcElement = $(this);
+  var url = srcElement.attr('href');
+  if (isAudioFile(url) && ($('#hover-audio').length == 0) && !srcElement.hasClass("broken-audio-link")) {
+    var audio = $("<audio id='hover-audio' controls autoplay src='"+url+"' style='display: none;'></audio>")
+    audio.on("error", function() {
+      srcElement.addClass('broken-audio-link');
+      $(this).remove();
+    });
+    audio.on("ended", function() {
+      $(this).remove();
+    });
+    $(document.body).append(audio);
+  }
+}
+
+var hoverPlay = function() {
+  $('a').live('mouseenter', hoverListener)
+}
+
+
+var disableHoverPlay = function() {
+  $('a').die('mouseenter', hoverListener);
+}
+
+var replaceLink = function() {
+  var list = $('a').filter(function (i) {
+    var a = $(this)
+    return isAudioFile(a.attr('href'));
+  });
+  list.after(function() {
+    var audio = $('<div class="audiomatic-div">');
+    var player = $("<audio controls src='"+$(this).attr('href')+"'></audio>")
+    audio.append(player);
+    return audio;
+  })
+
+}
+
+var disableReplaceLink = function() {
+  $('.audiomatic-div').remove()
+}
+
+chrome.extension.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    disableReplaceLink();
+    disableHoverPlay();
+    if (request.disabled == "true") {
+      return;
+    }
+    if (request.isHoverMode == "true") {
+      hoverPlay();
+    } else {
+      replaceLink();
+    }
+  }
+);
+
 chrome.extension.sendMessage({info: "mode"}, function(response) {
+  if (response.disabled == "true") {
+    return;
+  }
   if (response.isHoverMode == "true") {
     hoverPlay();
   } else {

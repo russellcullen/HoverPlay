@@ -11,14 +11,23 @@
       "48" : "icons/audiomatic48.png",
       "128" : "icons/audiomatic128.png"
     },
+    "browser_action" : {
+      "default_icon": "icons/audiomatic38.png",
+      "default_title": "Audiomatic Options",
+      "default_popup": "popup/popup.html"
+    },
     "content_scripts" : [
       {
         "matches" : [
           "http://*/*"
         ],
         "js" : [
+          "jquery.js",
           "contentscript.js"
         ]
       }
+    ],
+    "permissions": [
+      "tabs"
     ]
 }

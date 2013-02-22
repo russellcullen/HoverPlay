@@ -1,9 +1,12 @@
 chrome.extension.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-    if (request.info == "mode")
-      sendResponse({isHoverMode: localStorage["isHoverMode"]});
+    if (request.info == "mode") {
+      chrome.tabs.getSelected(null, function(tab) {
+        sendResponse({
+          disabled: localStorage["audiomatic-"+tab.url],
+          isHoverMode: localStorage["isHoverMode"]
+        });
+      });
+    }
   }
 );
