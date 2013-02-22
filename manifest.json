@@ -1,19 +1,22 @@
 {
-    "name": "Audiomatic",
+    "name": "HoverPlay",
     "version": "1.0",
     "manifest_version": 2,
     "description": "Easier interaction with audio links on the web.",
     "background" : {
-      "scripts": ["bg.js"]
+      "scripts": [
+        "jquery.js",
+        "bg.js"
+      ]
     },
     "options_page": "options/options.html",
     "icons": {
-      "48" : "icons/audiomatic48.png",
-      "128" : "icons/audiomatic128.png"
+      "48" : "icons/hoverplay48.png",
+      "128" : "icons/hoverplay128.png"
     },
-    "browser_action" : {
-      "default_icon": "icons/audiomatic38.png",
-      "default_title": "Audiomatic Options",
+    "page_action" : {
+      "default_icon": "icons/hoverplay38.png",
+      "default_title": "Disable HoverPlay",
       "default_popup": "popup/popup.html"
     },
     "content_scripts" : [
@@ -24,7 +27,8 @@
         "js" : [
           "jquery.js",
           "contentscript.js"
-        ]
+        ],
+        "css" : ["content.css"]
       }
     ],
     "permissions": [

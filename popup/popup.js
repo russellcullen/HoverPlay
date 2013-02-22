@@ -2,17 +2,13 @@
 
 // Saves options to localStorage.
 function save_options() {
-  var isHoverMode = document.getElementById("hover").checked;
-  localStorage.setItem("isHoverMode", isHoverMode);
-
   chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT, active: true}, function(tabs) {
     var tab = tabs[0];
     var disabled = document.getElementById("disabled").checked;
     var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
     localStorage.setItem("audiomatic-"+domain, disabled);
     chrome.tabs.sendMessage(tab.id, {
-      disabled: localStorage.getItem("audiomatic-"+domain), 
-      isHoverMode: localStorage.getItem("isHoverMode")
+      disabled: localStorage.getItem("audiomatic-"+domain),
     });
     window.close();
   });
@@ -20,14 +16,6 @@ function save_options() {
 
 // Restores select box state to saved value from localStorage.
 function restore_options() {
-  var isHoverMode = localStorage.getItem("isHoverMode");
-  if (isHoverMode == "true") {
-    document.getElementById("player").checked = false;
-    document.getElementById("hover").checked = true;
-  } else {
-    document.getElementById("hover").checked = false;
-    document.getElementById("player").checked = true;
-  }
   chrome.tabs.query({windowId: chrome.windows.WINDOW_ID_CURRENT, active: true}, function(tabs) {
     var tab = tabs[0];
     var domain = tab.url.match(/^[\w-]+:\/*\[?([\w\.:-]+)\]?(?::\d+)?/)[1];
