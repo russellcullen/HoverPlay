@@ -1,5 +1,5 @@
 function show_save() {
-  $('#status').fadeIn().delay(750).fadeOut();
+  $('#status').slideDown().delay(750).fadeOut();
 }
 
 function update_delay() {
