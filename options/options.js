@@ -1,25 +1,17 @@
-function save_options(closeWhenDone) {
+function save_options() {
   localStorage.setItem('hover-delay', $('#delay').val());
   // TODO: save disabled sites.
-  $('#status').text("Options Saved");
+  $('#status').fadeIn()
   setTimeout(function() {
-    $('#status').text("");
-    if (closeWhenDone) {
-      window.close();
-    }
+    $('#status').fadeOut()
   }, 750);
 }
 
 function restore_options() {
   for (var key in localStorage) {
-    if (key.search("disabled-") == 0) {
+    if (key.search("disabled-") == 0 && localStorage[key] == 'true') {
       var div = $("<div class='disabled-site'>");
-      var box = $("<input type='checkbox'>");
-      if (localStorage[key] == 'true') {
-        box.attr("checked", "checked");
-      }
       div.append(key.replace("disabled-", ""));
-      div.append(box);
       $('#sites').append(div);
     }
     if (key == "hover-delay"){
@@ -30,10 +22,6 @@ function restore_options() {
 
 $(function() {
   restore_options();
-  $('#save').click(function() {
-    save_options(true);
-  });
-  $('#delay').change(function() {
-    save_options(false);
-  });
+  $('#save').click(save_options);
+  $('#delay').change(save_options);
 })
