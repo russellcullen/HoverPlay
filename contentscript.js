@@ -36,19 +36,24 @@ var hoverListener = function () {
     if (srcElement.hasClass('hover-active') && isAudioFile(url) && isNewAudio(url) && !srcElement.hasClass("broken-audio-link")) {
       $('#hover-audio').show();
       $('#hover-audio').attr('src', url);
+      $('#hover-audio').off("error");
+      $('#hover-audio').on("error", function(e) {
+        srcElement.addClass('broken-audio-link');
+        $(this).hide();
+      });
       chrome.extension.sendMessage({show: true});
     }
   }, HOVER_DELAY);
 }
 
 var keyListener = function (e) {
+  var $player = $('#hover-audio')
   switch (e.which) {
     case 32:
-      var players = $('#hover-audio')
-      if (!players || !players[0]) {
+      if (!$player.is(':visible')) {
         break;
       }
-      var player = players[0]
+      var player = $player[0]
       var target = $(e.target)
       if (!(target.is("textarea") || target.is("input"))) {
         if (player.paused) {
@@ -60,7 +65,9 @@ var keyListener = function (e) {
       }
       break;
     case 27:
-      $('#hover-audio').remove();
+      $player[0].pause();
+      $player.removeAttr('src');
+      $player.hide();
       break;
   }
 }
@@ -83,10 +90,6 @@ $(function() {
   var d = $("<div id='hover-audio-div'>");
   // d.append("<div id='hover-audio-loading' style='display: none;'>Loading...</div>");
   var audio = $("<audio id='hover-audio' controls autoplay style='display: none;'></audio>");
-  audio.on("error", function(e) {
-    srcElement.addClass('broken-audio-link');
-    $(this).remove();
-  });
   audio.on("stalled", function() {
     this.play();
   })
