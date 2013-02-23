@@ -1,6 +1,6 @@
 {
     "name": "HoverPlay",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "manifest_version": 2,
     "description": "Easier interaction with audio links on the web.",
     "background" : {

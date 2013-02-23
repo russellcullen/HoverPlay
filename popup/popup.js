@@ -31,3 +31,8 @@ function restore_options() {
 
 document.addEventListener('DOMContentLoaded', restore_options);
 document.querySelector('#save').addEventListener('click', save_options);
+document.querySelector('#options').addEventListener('click', function() {
+  chrome.tabs.create({
+        url: "options/options.html"
+  });
+});
