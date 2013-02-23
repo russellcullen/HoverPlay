@@ -9,7 +9,7 @@ var isAudioFile = function (url) {
     return true;
   }
   // Checks to see if extension is last part of url
-  if (url.search(/\.mp3$|\.wav$|\.odd$/) > 0) {
+  if (url.search(/\.mp3$|\.wav$|\.ogg$/) > 0) {
     return true;
   }
   return false;
@@ -20,7 +20,6 @@ var isNewAudio = function(url) {
   if (current.length == 0 || (current[0].currentTime == current[0].duration)) {
     return true;
   }
-  // console.log(current.attr('href'))
   return current.attr('src') != url
 }
 
@@ -35,14 +34,8 @@ var hoverListener = function () {
   var url = srcElement.attr('href');
   setTimeout(function() {
     if (srcElement.hasClass('hover-active') && isAudioFile(url) && isNewAudio(url) && !srcElement.hasClass("broken-audio-link")) {
-      $('#hover-audio').remove();
-      var audio = $("<audio id='hover-audio' controls src='"+url+"'></audio>")
-      audio.on("error stalled", function() {
-        srcElement.addClass('broken-audio-link');
-        $(this).remove();
-      });
-      $(document.body).append(audio);
-      audio[0].play();
+      $('#hover-audio').show();
+      $('#hover-audio').attr('src', url);
       chrome.extension.sendMessage({show: true});
     }
   }, HOVER_DELAY);
@@ -75,7 +68,7 @@ var keyListener = function (e) {
 var hoverPlay = function() {
   $('a').live('mouseenter', hoverListener);
   $('a').live('mouseleave', removeHover);
-  $(document).on('keydown', keyListener)
+  $(document).on('keydown', keyListener);
 }
 
 
@@ -83,10 +76,25 @@ var disableHoverPlay = function() {
   $('a').die('mouseenter', hoverListener);
   $('a').die('mouseleave', removeHover);
   $(document).off('keydown', keyListener);
-  $('#hover-audio').remove();
+  $('#hover-audio').hide();
 }
 
 $(function() {
+  var d = $("<div id='hover-audio-div'>");
+  // d.append("<div id='hover-audio-loading' style='display: none;'>Loading...</div>");
+  var audio = $("<audio id='hover-audio' controls autoplay style='display: none;'></audio>");
+  audio.on("error", function(e) {
+    srcElement.addClass('broken-audio-link');
+    $(this).remove();
+  });
+  audio.on("stalled", function() {
+    this.play();
+  })
+  audio.on('waiting', function(e) {
+    this.load();
+  });
+  d.append(audio);
+  $(document.body).append(d);
   var needHoverPlay = false;
   $('a').each(function (){
     if (isAudioFile($(this).attr('href'))) {
