@@ -1,7 +1,13 @@
 #hover-audio-div {
 	position: fixed;
-	bottom:0;
+	bottom:20px;
 	right:0;
+}
+
+#hover-audio-div-left {
+	position: fixed;
+	bottom:20px;
+	left:0;
 }
 
 #hover-audio-loading {

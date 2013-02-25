@@ -85,6 +85,9 @@ var hoverPlay = function() {
   $('a').live('mouseenter', hoverListener);
   $('a').live('mouseleave', removeHover);
   $(document).on('keydown', keyListener);
+  if (location.href.search("facebook.com") >= 0) {
+    $('#hover-audio-div').attr("id", "hover-audio-div-left");
+  } 
 }
 
 
