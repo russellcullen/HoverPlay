@@ -11,3 +11,7 @@
 	text-align: center;
 	border-radius: 5px;
 }
+
+.ui-effects-transfer {
+    border: 1px solid black;
+  }

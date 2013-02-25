@@ -31,10 +31,19 @@ var removeHover = function () {
 var hoverListener = function () {
   var srcElement = $(this);
   srcElement.addClass('hover-active')
+  srcElement.on("click", function() {
+    $(this).removeClass('hover-active');
+    if ($('#hover-audio').length > 0) {
+      $('#hover-audio')[0].pause();
+    }
+  });
   var url = srcElement.attr('href');
   setTimeout(function() {
     if (srcElement.hasClass('hover-active') && isAudioFile(url) && isNewAudio(url) && !srcElement.hasClass("broken-audio-link")) {
-      $('#hover-audio').show();
+      if (!$('#hover-audio').is(":visible")) {
+        $('#hover-audio').show();
+        srcElement.effect("transfer", {to: $('#hover-audio')}, 500);
+      }
       $('#hover-audio').attr('src', url);
       $('#hover-audio').off("error");
       $('#hover-audio').on("error", function(e) {
